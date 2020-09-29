@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
 import Dashboard from "./pages/Dashboard.js"
 
 function App() {
   return (
-    <div className="App">
+    <div className="App text-center">
       <Dashboard />
     </div>
   );

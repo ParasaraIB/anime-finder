@@ -14,7 +14,6 @@ export default function SearchBar(props) {
     setTitle("");
   }
 
-
   return (
     <form className="mt-4"
      onSubmit={(e) => handleSubmit(e)}>

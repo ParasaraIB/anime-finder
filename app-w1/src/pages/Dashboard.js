@@ -1,26 +1,13 @@
-import React, { useState ,useEffect } from "react"
-import axios from "axios";
+import React from "react"
 import SearchBar from "../components/SearchBar.js";
 import AnimeCard from "../components/AnimeCard.js";
+import { useFetchAnime, useFetchRecommendations } from "../services/hooks/useFetch.js";
 
 function Dashboard() {
   
-  const [ title, setTitle ] = useState("");
-  const [ animes, setAnimes ] = useState([]);
+  const { title, animes, setTitle } = useFetchAnime();
 
-  useEffect(() => {
-    console.log("asd");
-    axios({
-      method: "GET",
-      url: `https://api.jikan.moe/v3/search/anime?q=${title}&page=1`
-    })
-      .then(({ data }) => {
-        setAnimes(data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      })  
-  }, [title])
+  const { recommended } = useFetchRecommendations();
 
   function getTitle(title) {
     setTitle(title);
@@ -35,16 +22,35 @@ function Dashboard() {
       />
       {/* <pre>{JSON.stringify(state.animes, null, 2)}</pre> */}
       <div className="container mt-5">
-        <div className="row">
-          {animes.map((anime) => {
-            return (
-              <AnimeCard 
-               key={anime.mal_id}
-               anime={anime}
-              />
-            );
-          })}
-        </div>
+        {animes.length ? (
+          <div>
+            <h4 className="mb-5">Results for: <span className="lead"><span className="badge badge-danger">{title}</span></span></h4>
+            <div className="row">
+              {animes.map((anime) => {
+                return (
+                  <AnimeCard 
+                  key={anime.mal_id}
+                  anime={anime}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <h4 className="mb-5">Recommendations</h4>
+            <div className="row">
+              {recommended.map((anime) => {
+                return (
+                  <AnimeCard 
+                  key={anime.mal_id}
+                  anime={anime}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
