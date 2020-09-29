@@ -3,9 +3,9 @@ import React from "react";
 function AnimeCard(props) {
 
   return (
-    <div className="col-4">
+    <div className="col-sm-12 col-md-6 col-lg-4">
       <div className="card mt-3" style={{width: "18rem"}}>
-        <img src={props.anime.image_url} className="card-img-top" alt="" />
+        <img src={props.anime.image_url} className="card-img-top" alt="" style={{height: "22rem"}} />
         <div className="card-body">
           <h5 className="card-title">{props.anime.title}</h5>
           {props.anime.synopsis ? (
