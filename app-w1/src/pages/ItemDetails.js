@@ -1,6 +1,6 @@
 import React from "react";
 import { useFetchById } from "../services/hooks/useFetch.js";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 const ItemDetails = () => {
 
@@ -13,13 +13,18 @@ const ItemDetails = () => {
     `https://api.jikan.moe/v3/anime/${id}`
   );
 
+  const handleClickBack = (e) => {
+    history.goBack();
+  }
+
   return (
     <div className="container">
       <div className="text-left mt-5">
-        <Link style={{ color: "black" }} to="/"><i className="fas fa-arrow-left"></i></Link>
+        {/* <Link style={{ color: "black" }} to="/"><i className="fas fa-arrow-left"></i></Link> */}
+        <i className="fas fa-arrow-left" style={{ cursor: "pointer" }} onClick={(e) => handleClickBack(e)}></i>
       </div>
       {anime === null ? (
-        <p>Loading</p>
+        <p>Loading...</p>
       ) : (
         <div>
           <h3 className="mt-5">Anime Details</h3>

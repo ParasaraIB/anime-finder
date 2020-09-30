@@ -13,18 +13,23 @@ function Dashboard() {
     setTitle(title);
   }
 
+  const handleClickBack = (e) => {
+    getTitle("");
+  }
+
   return (
     <div>
       <h3 className="mt-5">YourAnimeList.Net</h3>
+      <div className="container text-left">
+      <i className="fas fa-arrow-left" style={{ cursor: "pointer" }} onClick={(e) => handleClickBack(e)}></i>
+      </div>
       <SearchBar
-      //  onSubmit={(title) => getTitle(title)}
       onSubmit={getTitle}
       />
-      {/* <pre>{JSON.stringify(state.animes, null, 2)}</pre> */}
       <div className="container mt-5">
         {animes.length ? (
           <div>
-            <h4 className="mb-5">Results for: <span className="lead"><span className="badge badge-danger">{title}</span></span></h4>
+            <h4 className="mb-5">Results for: <span className="lead"><span className="badge badge-primary">{title}</span></span></h4>
             <div className="row">
               {animes.map((anime) => {
                 return (

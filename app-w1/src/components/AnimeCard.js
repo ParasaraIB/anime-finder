@@ -1,12 +1,23 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorites } from "../store/actions";
 
 function AnimeCard(props) {
 
-  let history = useHistory();
+  const history = useHistory();
 
-  const handleClick = () => {
+  const dispatch = useDispatch();
+
+  const favorites = useSelector((state) => state.favorites);
+
+  const handleClickDetails = () => {
     history.push(`/anime/${props.anime.mal_id}`);
+  }
+
+  const handleClickFavorites = (e, item) => {
+    console.log(item);
+    dispatch(addFavorites(item));
   }
 
   return (
@@ -16,18 +27,26 @@ function AnimeCard(props) {
         <div className="card-body">
           <h5 className="card-title">{props.anime.title}</h5>
           {props.anime.synopsis ? (
-            <p className="card-text">Score: <span className="lead"><span className="badge badge-danger">{props.anime.score}</span></span></p>
+            <p className="card-text">Score: <span className="lead"><span className="badge badge-primary">{props.anime.score}</span></span></p>
           ) : (
-            <p className="card-text text-center">Start Date: <span className="lead"><span className="badge badge-danger">{props.anime.start_date}</span></span></p>
+            <p className="card-text text-center">Start Date: <span className="lead"><span className="badge badge-primary">{props.anime.start_date}</span></span></p>
           )}
-          {/* <div className="text-center">
-            <a href={props.anime.url} className="btn btn-sm btn-dark" target="_blank" rel="noopener noreferrer">Details</a>
-          </div> */}
           <div className="text-center">
             <button 
               className="btn btn-sm btn-dark"
-              onClick={handleClick}
+              onClick={handleClickDetails}
             >Details</button>
+            {
+              favorites.find((favorite) => favorite.mal_id === props.anime.mal_id) ? (
+                <button className="btn btn-sm btn-danger ml-2" disabled>+ Favorite</button>
+              ) : (
+                <button
+                  className="btn btn-sm btn-danger ml-2"
+                  onClick={(e) => handleClickFavorites(e, props.anime)}
+                >+ Favorite
+                </button>
+              )
+            }
           </div>
         </div>
       </div>
