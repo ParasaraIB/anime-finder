@@ -53,3 +53,29 @@ export const useFetchRecommendations = () => {
   return { recommended, loading, error };
 
 }
+
+export const useFetchById = (apiUrl) => {
+
+  const [ data, setData ] = useState(null);
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState(null); 
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(apiUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+      })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [apiUrl]);
+
+  return { data, loading, error };
+}
