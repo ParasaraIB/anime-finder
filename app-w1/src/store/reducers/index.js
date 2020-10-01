@@ -1,5 +1,9 @@
 const initialState = {
-  favorites: []
+  favorites: [],
+  recommended: [],
+  animes: [],
+  title: "",
+  anime: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -8,16 +12,36 @@ const reducer = (state = initialState, action) => {
     case "ADD_FAVORITES":
       const newState = {
         ...state,
-        favorites: state.favorites.concat(action.payload)
+        favorites: state.favorites.concat(action.item)
       }
       return newState;
     case "REMOVE_FAVORITES": 
       const fileredFavorites = state.favorites.filter((favorite) => {
-        return favorite.mal_id !== action.payload;
+        return favorite.mal_id !== action.animeId;
       });
       return {
         ...state,
         favorites: fileredFavorites
+      }
+    case "SET_TITLE":
+      return {
+        ...state,
+        title: action.title
+      }
+    case "FETCH_RECOMMENDATIONS":
+      return {
+        ...state,
+        recommended: action.recommended
+      }
+    case "FETCH_ANIME":
+      return {
+        ...state,
+        animes: action.animes
+      }
+    case "FETCH_BY_ID":
+      return {
+        ...state,
+        anime: action.anime
       }
     default:
       return state;

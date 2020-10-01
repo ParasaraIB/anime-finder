@@ -1,8 +1,10 @@
+import axios from "axios";
+
 export const addFavorites = (item) => {
   
   return {
     type: "ADD_FAVORITES",
-    payload: item
+    item
   }
 
 }
@@ -11,7 +13,66 @@ export const removeFavorites = (animeId) => {
 
   return {
     type: "REMOVE_FAVORITES",
-    payload: animeId
+    animeId
+  }
+
+}
+
+export const setTitle = (title) => {
+
+  return {
+    type: "SET_TITLE",
+    title
+  }
+
+}
+
+export const fetchRecommendations = () => {
+
+  return (dispatch, getState) => {
+    const page = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    fetch(`https://api.jikan.moe/v3/top/anime/${page}/upcoming`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "FETCH_RECOMMENDATIONS",
+          recommended: data.top
+        });
+      })
+  }
+
+}
+
+export const fetchAnime = () => {
+
+  return (dispatch, getState) => {
+    axios({
+      method: "GET",
+      url: `https://api.jikan.moe/v3/search/anime?q=${getState().title}&page=1`
+    })
+      .then(({ data }) => {
+        dispatch({
+          type: "FETCH_ANIME",
+          animes: data.results
+        });
+      })
+  }
+
+}
+
+export const fetchById = (apiUrl) => {
+
+  return (dispatch, getState) => {
+    fetch(apiUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        dispatch({
+          type: "FETCH_BY_ID",
+          anime: data
+        });
+      })
   }
 
 }

@@ -1,17 +1,33 @@
-import React from "react"
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import SearchBar from "../components/SearchBar.js";
 import AnimeCard from "../components/AnimeCard.js";
-import { useFetchAnime, useFetchRecommendations } from "../services/hooks/useFetch.js";
+// import { useFetchAnime } from "../services/hooks/useFetch.js";
+import { fetchRecommendations, setTitle, fetchAnime } from "../store/actions";
 
 function Dashboard() {
   
-  const { title, animes, setTitle } = useFetchAnime();
+  // const { animes } = useFetchAnime();
 
-  const { recommended } = useFetchRecommendations();
+  const dispatch = useDispatch();
 
+  const recommended = useSelector((state) => state.recommended);
+  useEffect(() => {
+    const recommendationAction = fetchRecommendations();
+    dispatch(recommendationAction);
+  }, [dispatch]);
+
+  const title = useSelector((state) => state.title);
   function getTitle(title) {
-    setTitle(title);
+    console.log(title);
+    dispatch(setTitle(title));
   }
+
+  const animes = useSelector((state) => state.animes);
+  useEffect(() => {
+    const animesAction = fetchAnime();
+    dispatch(animesAction);
+  }, [dispatch, title]);
 
   const handleClickBack = (e) => {
     getTitle("");
