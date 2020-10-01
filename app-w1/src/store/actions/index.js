@@ -1,9 +1,18 @@
 import axios from "axios";
 
+import {
+  ADD_FAVORITES, 
+  REMOVE_FAVORITES,
+  SET_TITLE,
+  FETCH_RECOMMENDATIONS,
+  FETCH_ANIME,
+  FETCH_BY_ID
+} from "../actionTypes.js";
+
 export const addFavorites = (item) => {
-  
+
   return {
-    type: "ADD_FAVORITES",
+    type: ADD_FAVORITES,
     item
   }
 
@@ -12,7 +21,7 @@ export const addFavorites = (item) => {
 export const removeFavorites = (animeId) => {
 
   return {
-    type: "REMOVE_FAVORITES",
+    type: REMOVE_FAVORITES,
     animeId
   }
 
@@ -21,7 +30,7 @@ export const removeFavorites = (animeId) => {
 export const setTitle = (title) => {
 
   return {
-    type: "SET_TITLE",
+    type: SET_TITLE,
     title
   }
 
@@ -35,7 +44,7 @@ export const fetchRecommendations = () => {
       .then((res) => res.json())
       .then((data) => {
         dispatch({
-          type: "FETCH_RECOMMENDATIONS",
+          type: FETCH_RECOMMENDATIONS,
           recommended: data.top
         });
       })
@@ -48,11 +57,11 @@ export const fetchAnime = () => {
   return (dispatch, getState) => {
     axios({
       method: "GET",
-      url: `https://api.jikan.moe/v3/search/anime?q=${getState().title}&page=1`
+      url: `https://api.jikan.moe/v3/search/anime?q=${getState().animeReducer.title}&page=1`
     })
       .then(({ data }) => {
         dispatch({
-          type: "FETCH_ANIME",
+          type: FETCH_ANIME,
           animes: data.results
         });
       })
@@ -69,7 +78,7 @@ export const fetchById = (apiUrl) => {
       })
       .then((data) => {
         dispatch({
-          type: "FETCH_BY_ID",
+          type: FETCH_BY_ID,
           anime: data
         });
       })

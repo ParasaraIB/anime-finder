@@ -1,23 +1,17 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useFetchById } from "../services/hooks/useFetch.js";
 import { useParams, useHistory } from "react-router-dom";
+
 import { fetchById } from "../store/actions"
 
 const ItemDetails = () => {
 
   const { id } = useParams();
-  console.log(id);
   const history = useHistory();
-  console.log(history);
 
   const dispatch = useDispatch();
 
-  // const { data: anime } = useFetchById(
-  //   `https://api.jikan.moe/v3/anime/${id}`
-  // );
-
-  const anime = useSelector((state) => state.anime);
+  const anime = useSelector((state) => state.animeReducer.anime);
   useEffect(() => {
     const animeAction = fetchById(`https://api.jikan.moe/v3/anime/${id}`)
     dispatch(animeAction);

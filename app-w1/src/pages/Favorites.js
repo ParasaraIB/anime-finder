@@ -1,11 +1,13 @@
 import React from "react";
+import Swal from "sweetalert2";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { removeFavorites } from "../store/actions"
 
 const Favorites = () => {
 
-  const favorites = useSelector((state) => state.favorites);
+  const favorites = useSelector((state) => state.favoriteReducer.favorites);
 
   const dispatch = useDispatch();
 
@@ -16,7 +18,24 @@ const Favorites = () => {
   }
 
   const handleClickRemove = (e, id) => {
-    dispatch(removeFavorites(id));
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(removeFavorites(id));
+        Swal.fire(
+          'Removed!',
+          'Removed Successfully!',
+          'success'
+        )
+      }
+    })
   }
 
   return (
