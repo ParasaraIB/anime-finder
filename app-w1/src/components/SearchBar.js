@@ -22,7 +22,7 @@ export default function SearchBar(props) {
         value={title}
         onChange={(e) => handleOnChange(e)}
        />
-       <button type="submit" className="btn btn-sm btn-dark ml-2">Search</button>
+       <button type="submit" className="btn btn-sm btn-dark ml-2" data-testid="search-button">Search</button>
     </form>
   )
 

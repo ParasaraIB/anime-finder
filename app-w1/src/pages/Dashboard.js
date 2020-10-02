@@ -32,17 +32,17 @@ function Dashboard() {
 
   return (
     <div>
-      <h3 className="mt-5">YourAnimeList.Net</h3>
+      <h3 className="mt-5" data-testid="app-title">YourAnimeList.Net</h3>
       <div className="container text-left">
       <i className="fas fa-arrow-left" style={{ cursor: "pointer" }} onClick={(e) => handleClickBack(e)}></i>
       </div>
       <SearchBar
       onSubmit={getTitle}
       />
-      <div className="container mt-5">
+      <div className="container mt-5" data-testid="animes-container">
         {animes.length ? (
           <div>
-            <h4 className="mb-5">Results for: <span className="lead"><span className="badge badge-primary">{title}</span></span></h4>
+            <h4 className="mb-5" data-testid="results-heading">Results for: <span className="lead"><span className="badge badge-primary">{title}</span></span></h4>
             <div className="row">
               {animes.map((anime) => {
                 return (
@@ -56,7 +56,7 @@ function Dashboard() {
           </div>
         ) : (
           <div>
-            <h4 className="mb-5">Recommendations</h4>
+            <h4 className="mb-5" data-testid="recommendation-heading">Recommendations</h4>
             <div className="row">
               {recommended.map((anime) => {
                 return (
